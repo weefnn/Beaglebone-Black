@@ -1,0 +1,37 @@
+for uart, config-pin to set pin mode for UART1 and UART2 pins
+config-pin P9.21 uart  # UART2_TXD
+config-pin P9.22 uart  # UART2_RXD
+config-pin P9.24 uart  # UART1_TXD
+config-pin P9.26 uart  # UART1_RXD
+
+
+Avaiable UART names beaglebone
+UART1:/dev/ttyO1, Rx:P9_26, Tx:P9_24
+UART2:/dev/ttyO2, Rx:P9_22, Tx:P9_21
+UART4:/dev/ttyO4, Rx:P9_11, Tx:P9_13
+UART5:/dev/ttyO5, Rx:P8_38, Tx:P8_37
+
+Use config-pin to set pin mode for SPI pins
+	SPI0
+		SPI0_CS0: config-pin p9.17 spi_cs
+		SPI0_D0: config-pin p9.21 spi
+		SPI0_D1: config-pin p9.18 spi
+		SPI0_SCLK: config-pin p9.22 spi_sclk
+	SPI1
+		SPI1_CS0: config-pin p9.20 spi_cs
+		SPI1_CS0: config-pin p9.28 spi_cs
+		SPI1_CS1: config-pin p9.19 spi_cs
+		SPI1_CS1: config-pin p9.42 spi_cs
+		SPI1_D0: config-pin p9.29 spi
+		SPI1_D1: config-pin p9.30 spi
+		SPI1_SCLK: config-pin p9.31 spi_sclk
+
+		
+		
+I2C:
+	P9_19: I2C2, SCL
+	P9_20: I2C2, SDA
+	
+	probe I2C busses for connected devices.
+		i2cdetect -y -r 0
+		i2cdetect -y -r 1
