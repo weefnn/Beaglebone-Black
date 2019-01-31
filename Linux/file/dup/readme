@@ -1,0 +1,13 @@
+duplicate a file descriptor 
+复制文件描述符，不是文件结构体！！！
+
+int dup(int oldfd);
+return新的描述符  指向同一个文件结构体
+int dup2(int oldfd, int newfd); /* 指定新的描述符*/
+如果新的描述符已经存在，则先关闭这个文件描述符之前指向的文件结构体,再打开这个新的描述符
+##即newfd 指向了 oldfd指向的的文件结构体
+
+dup / dup2 备份/指定一个文件描述符
+
+注意：
+描述符：0 STDIN_FILENO 1 STDOUT_FILENO 2 STDERR_FILENO

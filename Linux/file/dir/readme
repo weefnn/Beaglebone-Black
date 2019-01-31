@@ -1,1 +1,8 @@
 when return from the ./dir , the directory is previous dir.
+
+readdir return one record each time.
+directory:
+inode number
+offset
+file type
+file name 
