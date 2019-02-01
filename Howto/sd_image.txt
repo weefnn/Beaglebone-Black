@@ -58,3 +58,4 @@ sync
 sudo umount /media/rootfs
 
 #https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone
+#using TI-SDK :creat-sdcard.sh
