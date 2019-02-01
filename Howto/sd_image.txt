@@ -1,0 +1,60 @@
+#DISK = /dev/mmcblk0 , use lsblk to determine the device id
+#dd：用指定大小的块拷贝一个文件，并在拷贝的同时进行指定的转换。
+#< if=input file >
+#< of=output file >
+# count=blocks：仅拷贝blocks个块，块大小等于ibs指定的字节数。
+# seek=N skip N  bs-sized blocks at start of output
+# bs=BYTES  read and write up to BYTES bytes at a time (default: 512); overrides ibs and obs
+export DISK=/dev/mmcblk0
+
+#erase partition table/labels on microSD card:
+sudo dd if=/dev/zero of=${DISK} bs=1M count=10
+
+#install bootloader
+sudo dd if=./uboot/MLO of=${DISK} count=1 seek=1 bs=128k
+sudo dd if=./u-boot/uboot.img of=${DISK} count=2 seek=1 bs=384k
+
+#Create Partition Layout:
+sudo sfdisk --version ==>sfdisk from util-linux 2.27.1
+sudo sfdisk ${DISK} <<-__EOF__
+4M,,L,*
+__EOF__
+#Format Partition:
+for: DISK=/dev/mmcblk0
+sudo mkfs.ext4 -L rootfs ${DISK}p1
+#Mount Partition:
+sudo mkdir -p /media/rootfs/
+for: DISK=/dev/mmcblk0
+sudo mount ${DISK}p1 /media/rootfs/
+
+#Install Kernel and Root File System
+#copy root file system
+sudo tar xfvp ./*-*-*-armhf-*/armhf-rootfs-*.tar -C /media/rootfs/
+sync
+sudo chown root:root /media/rootfs/
+sudo chmod 755 /media/rootfs/
+#set uname_r in /boot/uEnv.txt
+sudo sh -c "echo 'uname_r=${kernel_version}' >> /media/rootfs/boot/uEnv.txt"
+#copy kernel image
+sudo cp -v ./bb-kernel/deploy/${kernel_version}.zImage /media/rootfs/boot/vmlinuz-${kernel_version}
+#Copy Kernel Device Tree Binaries
+sudo mkdir -p /media/rootfs/boot/dtbs/${kernel_version}/
+sudo tar xfv ./bb-kernel/deploy/${kernel_version}-dtbs.tar.gz -C /media/rootfs/boot/dtbs/${kernel_version}/
+#Copy Kernel Modules
+sudo tar xfv ./bb-kernel/deploy/${kernel_version}-modules.tar.gz -C /media/rootfs/
+#File Systems Table (/etc/fstab)
+sudo sh -c "echo '/dev/mmcblk0p1  /  auto  errors=remount-ro  0  1' >> /media/rootfs/etc/fstab"
+#Networking
+Edit: /etc/network/interfaces
+sudo nano /media/rootfs/etc/network/interfaces
+Add: /etc/network/interfaces
+	auto lo
+	iface lo inet loopback
+	auto eth0
+	iface eth0 inet dhcp
+	
+#Remove microSD/SD card
+sync
+sudo umount /media/rootfs
+
+#https://www.digikey.com/eewiki/display/linuxonarm/BeagleBone
