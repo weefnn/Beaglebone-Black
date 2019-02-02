@@ -1,0 +1,19 @@
+stat: inode 相关的设置
+
+access time: 最近访问时间 
+modify time: 最近改动时间 指的是最近修改改文件内容的时间
+change time: 最近改动时间 指的是最近改动inode的时间
+
+touch 更新文件的时间
+
+chmod 改变 changge time.因为改变了inode
+
+vim 查看文件，access time时间改变
+
+添加内容： modify time 和 change time 都改变了
+
+
+access:
+sudo vim 
+实际用户ID :phil
+有效用户ID :root

@@ -1,0 +1,21 @@
+进程 or 程序：
+process == > PCB
+{
+	    pid
+		state : run pending stop zumbie
+		stack: save & restore registers of cpu
+		virtual address:
+		tty
+		current working directory: pwd
+		umask
+		* file descriptor table : fd
+		signals
+		uid gid
+		tty session process-group
+		resource limit
+}
+
+0G~3G: user space
+3G~4G: kernel space
+a.out and b.out share the same physical memory(address).
+PCBs in kernel space (a.out PCB & b.out PCB)
