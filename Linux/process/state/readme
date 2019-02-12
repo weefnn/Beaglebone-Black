@@ -1,0 +1,7 @@
+睡眠态：  sleep :阻塞I/O: 
+
+ulimit -a
+getrlimit() : 获取进程资源limit
+setrlimit() : 设置
+
+进程源语：fork exec wait

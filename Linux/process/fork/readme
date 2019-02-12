@@ -1,0 +1,9 @@
+子进程： copy的： 0～3G完全copy父进程   PCB
+         不copy的: PCB中的 PID
+
+fork :
+clone 父进程0~3G的内容
+
+读时共享，写时复制 copy on write
+
+
