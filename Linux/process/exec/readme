@@ -1,0 +1,30 @@
+exec 和 fork 同时使用，parent继续执行， fork出的子进程 调用exec 加载其他程序。
+exec族：
+
+exec:用磁盘中另一个程序的代码段，数据段,堆、栈覆盖掉当前程序的代码段和数据段堆栈。
+
+#include <unistd.h>
+
+extern char **environ;
+----l(list) : 参数是以list的形式全部列出
+----p(path) : 不用跟路经,去path环境变量里面去找
+----v(vector) : 参数以数组向量的形式出现
+----e(env) : 构建一个env替换当前的env
+
+int execl(const char *path, const char *arg, ...
+		/* (char  *) NULL */);
+//execl("/bin/ls", "ls", "-l", NULL);
+
+int execlp(const char *file, const char *arg, ...
+		/* (char  *) NULL */);
+//execlp("ls", "ls", "-l", NULL);
+
+int execle(const char *path, const char *arg, ...
+		/*, (char *) NULL, char * const envp[] */);
+int execv(const char *path, char *const argv[]);
+//char * v[] = {"ls", "-l", NULL};
+//execv("/bin/ls", v);
+
+int execvp(const char *file, char *const argv[]);
+int execvpe(const char *file, char *const argv[],
+		char *const envp[]);
