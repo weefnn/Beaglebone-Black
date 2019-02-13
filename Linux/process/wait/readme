@@ -1,0 +1,6 @@
+waitpid(pid, &status, options)
+
+pid < -1: 等待进程组为-pid的子进程结束
+pid = -1: 等待任意一个子进程
+pid = 0 : 等待所有和本进程相同组ID的子进程
+pid > 0 : 等待进程ID 是pid的子进程

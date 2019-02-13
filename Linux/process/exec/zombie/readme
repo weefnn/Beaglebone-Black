@@ -1,0 +1,14 @@
+wait 是一个阻塞函数， 父进程阻塞wait等待子进程死掉。
+回收完了再次执行wait会返回-1
+
+
+wait回收僵尸进程，僵尸进程占用PCB内存存储空间。
+
+wait(&status)的返回值是子进程的进程ID ，
+status:让父进程知道子进程的退出/杀死情况。
+
+waitpid(pid, &status, )
+pid < -1 回收-pid
+pid = -1 回收所有子进程
+pid < 0  
+pid > 0 

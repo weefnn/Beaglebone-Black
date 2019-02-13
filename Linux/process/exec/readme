@@ -25,6 +25,10 @@ int execv(const char *path, char *const argv[]);
 //char * v[] = {"ls", "-l", NULL};
 //execv("/bin/ls", v);
 
-int execvp(const char *file, char *const argv[]);
+推荐>>>>>>>int execvp(const char *file, char *const argv[]);
 int execvpe(const char *file, char *const argv[],
 		char *const envp[]);
+
+
+僵尸进程：Z+
+子进程用户空间释放，但是内核空间的PCB 等待父进程回收。
